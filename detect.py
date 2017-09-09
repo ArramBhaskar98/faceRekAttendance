@@ -70,7 +70,7 @@ if __name__ == '__main__':
 			right = left + face["BoundingBox"]["Width"]*width
 			lower = upper + face["BoundingBox"]["Height"]*height
 			img2 = img.crop((left, upper, right, lower))
-
+			img2 = img2.resize((200,200))
 			img2.save('img' + str(index) + '.jpg')
 			
 			img2.show()
@@ -87,6 +87,8 @@ if __name__ == '__main__':
 							}
 						}
 					)
+
+					#updateDB(response1['FaceMatches'])
 					print(response1)
 				except:
 					continue
@@ -95,8 +97,8 @@ if __name__ == '__main__':
 			os.system("rm "+'img' + str(index) + '.jpg')
 			index += 1
 
-	os.system("aws s3 rm s3://classimages --recursive")
-	os.system("rm local_img.jpg")
+	#os.system("aws s3 rm s3://classimages --recursive")
+	#os.system("rm local_img.jpg")
 
 
 	
