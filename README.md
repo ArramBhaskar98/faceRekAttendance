@@ -35,4 +35,4 @@ Add an entry into the database, USN is passed as a parameter
 This file updates the attendance database. The USN is an argument, and the attendance is marked based on the time automatically.
 
 ### viewDB.py
-Retrieve the 
+Retrieve the current attendance status from the database.
