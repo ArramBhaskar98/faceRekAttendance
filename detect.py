@@ -23,7 +23,7 @@ def upload_photo(img):
 
 #---------------------------------------------------
 
-	
+
 
 if __name__ == '__main__':
 	client = boto3.client('rekognition')
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 	for object in KEY_LIST:
 		print(str(object.key))
 
-		
+
 
 	KEY = '1.jpg'
 	for object in KEY_LIST:
@@ -72,7 +72,7 @@ if __name__ == '__main__':
 			img2 = img.crop((left, upper, right, lower))
 			img2 = img2.resize((200,200))
 			img2.save('img' + str(index) + '.jpg')
-			
+
 			img2.show()
 			with open('img' + str(index) + '.jpg', 'rb') as image:
 				#image.show()
@@ -89,16 +89,27 @@ if __name__ == '__main__':
 					)
 
 					#updateDB(response1['FaceMatches'])
-					print(response1)
+					#json_obj = json.loads(response1)
+					#print(type(response1))
+					#json_size = len(json_obj) - 2
+					#print(json_size)
+					#if (json_size > 0):
+					print(response1['FaceMatches'][0]['Face']['ExternalImageId'].upper())
+
+					#print(response1)
 				except:
 					continue
-				
-			os.system("aws s3 rm s3://croprvce --recursive")
-			os.system("rm "+'img' + str(index) + '.jpg')
+
+			s3new = boto.connect_s3()
+			bucket = s3new.get_bucket("croprvce")
+			bucketListResultSet = bucket.list(prefix="")
+			result = bucket.delete_keys([key.name for key in bucketListResultSet])
+			#os.system("aws s3 rm s3://croprvce --recursive")
+			#os.system("rm "+'img' + str(index) + '.jpg')
 			index += 1
 
 	#os.system("aws s3 rm s3://classimages --recursive")
 	#os.system("rm local_img.jpg")
 
 
-	
+
